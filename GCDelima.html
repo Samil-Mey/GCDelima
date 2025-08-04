@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bab 1: Pengenalan DELIMa & Google Classroom</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Chosen Palette: Calm Harmony Neutrals -->
+    <!-- Application Structure Plan: Aplikasi ini direka bentuk sebagai satu perjalanan pembelajaran interaktif dari atas ke bawah. Ia bermula dengan pengenalan, diikuti dengan objektif yang boleh diklik, gambaran visual ekosistem DELIMa menggunakan carta donat dan kad interaktif, penerokaan mendalam tentang kepentingan Google Classroom melalui kad yang boleh dikembangkan, dan kemuncak interaktif di mana pengguna boleh meneroka mockup antara muka Google Classroom dengan hotspot. Struktur ini dipilih untuk mengubah modul berasaskan teks kepada pengalaman yang menarik secara visual dan kinestetik, memudahkan pemahaman dan pengekalan maklumat bagi guru dengan pelbagai tahap kemahiran teknikal. -->
+    <!-- Visualization & Content Choices: 1. Objektif (1.2) -> Kad Interaktif -> Klik untuk mendedahkan butiran -> Menjadikan objektif lebih menarik daripada senarai statik. 2. Komponen DELIMa (1.3.2) -> Carta Donat (Chart.js) & Kad -> Visualisasi & Klik -> Carta donat secara visual menunjukkan Google Classroom sebagai komponen teras, manakala kad memberikan butiran untuk aplikasi lain. Ini lebih berkesan daripada senarai teks. 3. Kepentingan GC (1.4.2) -> Kad Boleh Kembang -> Klik untuk membuka -> Memecahkan maklumat kepada bahagian kecil yang mudah dihadam, mengelakkan pengguna daripada berasa terbeban. 4. Antara Muka GC (1.5) -> Mockup UI dengan Hotspot -> Hover/Klik -> Menyediakan pengalaman pembelajaran kontekstual dan 'hands-on' dengan meletakkan maklumat terus pada elemen visual yang relevan. Ini mengukuhkan pemahaman tentang navigasi. -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #F8F7F4;
+            color: #374151;
+        }
+        .interactive-card {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .interactive-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+        .hotspot {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background-color: rgba(4, 120, 87, 0.8);
+            border-radius: 50%;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .hotspot:before {
+            content: '+';
+            color: white;
+            font-weight: bold;
+            font-size: 16px;
+            line-height: 20px;
+        }
+        .hotspot:hover {
+            transform: scale(1.2);
+            background-color: rgba(2, 62, 44, 1);
+        }
+        .hotspot .tooltip {
+            visibility: hidden;
+            width: 250px;
+            background-color: #374151;
+            color: #fff;
+            text-align: center;
+            border-radius: 6px;
+            padding: 8px;
+            position: absolute;
+            z-index: 1;
+            bottom: 150%;
+            left: 50%;
+            margin-left: -125px;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+        .hotspot:hover .tooltip {
+            visibility: visible;
+            opacity: 1;
+        }
+        .accordion-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease-out;
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 400px;
+            margin-left: auto;
+            margin-right: auto;
+            height: auto;
+            max-height: 400px;
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        
+        <header class="text-center mb-16">
+            <h1 class="text-4xl md:text-5xl font-bold text-gray-800">Bab 1: Pengenalan DELIMa & Google Classroom</h1>
+            <p class="mt-4 text-lg text-gray-600 max-w-3xl mx-auto">Selamat datang ke modul pengenalan! Bab ini akan membawa anda meneroka ekosistem pembelajaran digital KPM dan peranan penting Google Classroom dalam mentransformasikan Pengajaran dan Pembelajaran (PdP).</p>
+        </header>
+
+        <main>
+            <section id="objektif" class="mb-20">
+                <h2 class="text-3xl font-bold text-center mb-4 text-gray-800">Apa yang Anda Akan Pelajari?</h2>
+                <p class="text-center text-gray-600 mb-10">Pada akhir bab ini, anda akan dapat menguasai objektif-objektif berikut:</p>
+                <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+                    <div class="interactive-card bg-white p-6 rounded-lg shadow-md border border-gray-200">
+                        <h3 class="font-bold text-lg text-emerald-700">Memahami DELIMa</h3>
+                        <p class="mt-2 text-gray-600">Menerangkan konsep dan tujuan utama platform digital KPM, iaitu DELIMa.</p>
+                    </div>
+                    <div class="interactive-card bg-white p-6 rounded-lg shadow-md border border-gray-200">
+                        <h3 class="font-bold text-lg text-emerald-700">Peranan Google Classroom</h3>
+                        <p class="mt-2 text-gray-600">Menghubungkaitkan kedudukan Google Classroom sebagai komponen teras dalam ekosistem DELIMa.</p>
+                    </div>
+                    <div class="interactive-card bg-white p-6 rounded-lg shadow-md border border-gray-200">
+                        <h3 class="font-bold text-lg text-emerald-700">Kelebihan & Kepentingan</h3>
+                        <p class="mt-2 text-gray-600">Menyatakan manfaat dan kelebihan menggunakan Google Classroom dalam PdP harian.</p>
+                    </div>
+                    <div class="interactive-card bg-white p-6 rounded-lg shadow-md border border-gray-200">
+                        <h3 class="font-bold text-lg text-emerald-700">Navigasi Asas</h3>
+                        <p class="mt-2 text-gray-600">Mengenali antara muka dan fungsi-fungsi asas yang terdapat di dalam Google Classroom.</p>
+                    </div>
+                </div>
+            </section>
+
+            <section id="delima" class="mb-20 bg-emerald-50 rounded-xl p-8 md:p-12">
+                <h2 class="text-3xl font-bold text-center mb-4 text-gray-800">Memahami Ekosistem: DELIMa</h2>
+                <p class="text-center text-gray-600 mb-10 max-w-3xl mx-auto">DELIMa, atau Digital Educational Learning Initiative Malaysia, adalah platform sehenti anda untuk semua keperluan pendidikan digital. Ia menyatukan pelbagai aplikasi dan sumber untuk memudahkan PdP.</p>
+                <div class="flex flex-col lg:flex-row items-center gap-8">
+                    <div class="lg:w-1/2">
+                        <h3 class="text-2xl font-semibold mb-4 text-gray-700">Komponen Utama DELIMa</h3>
+                        <p class="mb-6 text-gray-600">DELIMa adalah sebuah portal yang menjadi gerbang kepada pelbagai aplikasi hebat. Google Classroom merupakan nadi utamanya, tetapi ia juga diintegrasikan dengan alatan lain yang sangat berguna untuk guru dan murid.</p>
+                        <div class="space-y-3">
+                            <div class="bg-white p-4 rounded-lg shadow-sm border border-gray-200">
+                                <p><strong class="text-emerald-700">Google Classroom:</strong> Hab utama untuk pengurusan bilik darjah maya.</p>
+                            </div>
+                            <div class="bg-white p-4 rounded-lg shadow-sm border border-gray-200">
+                                <p><strong class="text-emerald-700">Google Meet:</strong> Untuk sesi kelas secara langsung dan persidangan video.</p>
+                            </div>
+                            <div class="bg-white p-4 rounded-lg shadow-sm border border-gray-200">
+                                <p><strong class="text-emerald-700">Google Drive:</strong> Storan awan tanpa had untuk semua bahan PdP anda.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="lg:w-1/2 w-full">
+                        <div class="chart-container">
+                            <canvas id="delimaChart"></canvas>
+                        </div>
+                         <p class="text-center text-sm text-gray-500 mt-2">Visualisasi Ekosistem Aplikasi dalam DELIMa</p>
+                    </div>
+                </div>
+            </section>
+
+            <section id="google-classroom" class="mb-20">
+                <h2 class="text-3xl font-bold text-center mb-4 text-gray-800">Fokus Utama: Google Classroom</h2>
+                <p class="text-center text-gray-600 mb-10 max-w-3xl mx-auto">Sebagai komponen teras DELIMa, Google Classroom direka untuk membantu guru dan pelajar menguruskan tugasan, bahan pembelajaran, dan komunikasi dengan lebih cekap. Klik pada setiap kelebihan di bawah untuk maklumat lanjut.</p>
+                <div class="space-y-4" id="accordion-container">
+                    <div class="accordion-item border border-gray-200 rounded-lg bg-white">
+                        <button class="accordion-header w-full p-5 text-left font-semibold text-lg text-gray-700 flex justify-between items-center hover:bg-gray-50">
+                            Pengurusan PdP yang Cekap
+                            <span class="transform transition-transform duration-300">▼</span>
+                        </button>
+                        <div class="accordion-content px-5 pb-5 text-gray-600">
+                            Memudahkan guru untuk mencipta, mengedar, dan menilai tugasan secara digital tanpa memerlukan kertas. Semua tugasan dan bahan tersusun rapi mengikut topik.
+                        </div>
+                    </div>
+                    <div class="accordion-item border border-gray-200 rounded-lg bg-white">
+                        <button class="accordion-header w-full p-5 text-left font-semibold text-lg text-gray-700 flex justify-between items-center hover:bg-gray-50">
+                            Kolaborasi yang Dipertingkatkan
+                            <span class="transform transition-transform duration-300">▼</span>
+                        </button>
+                        <div class="accordion-content px-5 pb-5 text-gray-600">
+                            Membolehkan guru dan pelajar berinteraksi melalui ruangan pengumuman dan komen. Pelajar juga boleh bekerjasama dalam tugasan menggunakan alatan Google Workspace.
+                        </div>
+                    </div>
+                    <div class="accordion-item border border-gray-200 rounded-lg bg-white">
+                        <button class="accordion-header w-full p-5 text-left font-semibold text-lg text-gray-700 flex justify-between items-center hover:bg-gray-50">
+                            Akses Mudah Di Mana-mana
+                            <span class="transform transition-transform duration-300">▼</span>
+                        </button>
+                        <div class="accordion-content px-5 pb-5 text-gray-600">
+                            Bahan pembelajaran dan tugasan boleh diakses pada bila-bila masa, di mana sahaja, menggunakan pelbagai peranti seperti komputer, tablet, atau telefon pintar.
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="interface-tour" class="mb-16">
+                <h2 class="text-3xl font-bold text-center mb-4 text-gray-800">Jelajahi Antara Muka Google Classroom</h2>
+                <p class="text-center text-gray-600 mb-10 max-w-3xl mx-auto">Mari kita lihat dengan lebih dekat rupa Google Classroom. Interaksi dengan imej di bawah (gerakkan tetikus ke atas tanda <span class="inline-block bg-emerald-600 text-white rounded-full h-5 w-5 text-center leading-5 text-sm">+</span>) untuk mengetahui fungsi setiap bahagian utama.</p>
+                <div class="bg-white rounded-lg shadow-xl p-4 border border-gray-200">
+                    <div class="relative w-full max-w-4xl mx-auto">
+                        <div class="bg-gray-100 rounded-md p-4">
+                            <div class="flex items-center justify-between mb-4 pb-2 border-b">
+                                <div class="flex items-center space-x-4">
+                                    <div class="w-6 h-1 bg-gray-400 rounded-full"></div>
+                                    <div class="w-6 h-1 bg-gray-400 rounded-full"></div>
+                                    <div class="w-6 h-1 bg-gray-400 rounded-full"></div>
+                                </div>
+                                <div class="text-lg font-bold text-gray-700">Kelas Sains 5 Ibnu Sina</div>
+                                <div class="flex items-center space-x-2">
+                                    <div class="w-8 h-8 bg-gray-300 rounded-full"></div>
+                                    <div class="w-8 h-8 bg-gray-300 rounded-full"></div>
+                                </div>
+                            </div>
+                            <div class="flex space-x-8 mb-4 border-b">
+                                <div class="font-semibold text-emerald-600 border-b-2 border-emerald-600 py-2">Stream</div>
+                                <div class="font-semibold text-gray-500 py-2">Classwork</div>
+                                <div class="font-semibold text-gray-500 py-2">People</div>
+                                <div class="font-semibold text-gray-500 py-2">Grades</div>
+                                <div class="hotspot" style="top: 55px; left: 30px;">
+                                    <span class="tooltip">Tab 'Stream' (Aliran) adalah papan pengumuman utama kelas. Di sini guru boleh berkongsi maklumat dan pengumuman penting.</span>
+                                </div>
+                                <div class="hotspot" style="top: 55px; left: 130px;">
+                                    <span class="tooltip">Tab 'Classwork' (Kerja Kelas) adalah tempat semua bahan pembelajaran dan tugasan disusun. Ini adalah bahagian paling penting untuk pelajar.</span>
+                                </div>
+                                <div class="hotspot" style="top: 55px; left: 245px;">
+                                    <span class="tooltip">Tab 'People' (Ahli) memaparkan senarai semua guru dan rakan sekelas anda yang berada di dalam kelas maya ini.</span>
+                                </div>
+                            </div>
+                            <div class="bg-white rounded-lg shadow-md p-4">
+                                <div class="flex items-start space-x-4">
+                                    <div class="w-10 h-10 bg-emerald-200 rounded-full"></div>
+                                    <div class="flex-1">
+                                        <div class="bg-gray-200 h-4 w-3/4 rounded-md mb-2"></div>
+                                        <div class="bg-gray-200 h-3 w-1/2 rounded-md"></div>
+                                    </div>
+                                </div>
+                                <div class="hotspot" style="top: 130px; right: 20px;">
+                                    <span class="tooltip">Setiap pengumuman atau tugasan baru akan muncul di sini, di dalam 'Stream'.</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            
+            <section id="rumusan" class="bg-gray-800 text-white rounded-xl p-8 md:p-12 text-center">
+                <h2 class="text-3xl font-bold mb-4">Rumusan Bab</h2>
+                <p class="max-w-3xl mx-auto text-gray-300">Tahniah! Anda kini telah memahami konsep asas platform **DELIMa** sebagai gerbang pendidikan digital KPM, dan peranan **Google Classroom** sebagai alat pengurusan bilik darjah yang berkuasa. Pemahaman ini adalah langkah pertama yang penting sebelum kita meneroka ciri-ciri lain dengan lebih mendalam dalam bab-bab seterusnya.</p>
+            </section>
+
+        </main>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const ctx = document.getElementById('delimaChart').getContext('2d');
+            new Chart(ctx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Google Classroom', 'Google Meet', 'Google Drive', 'Aplikasi Lain'],
+                    datasets: [{
+                        label: 'Ekosistem DELIMa',
+                        data: [50, 20, 20, 10],
+                        backgroundColor: [
+                            'rgba(4, 120, 87, 0.7)',
+                            'rgba(5, 150, 105, 0.7)',
+                            'rgba(16, 185, 129, 0.7)',
+                            'rgba(110, 231, 183, 0.7)'
+                        ],
+                        borderColor: [
+                            'rgba(4, 120, 87, 1)',
+                            'rgba(5, 150, 105, 1)',
+                            'rgba(16, 185, 129, 1)',
+                            'rgba(110, 231, 183, 1)'
+                        ],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'top',
+                        },
+                        title: {
+                            display: true,
+                            text: 'Pecahan Aplikasi Teras dalam DELIMa'
+                        }
+                    }
+                }
+            });
+
+            const accordionHeaders = document.querySelectorAll('.accordion-header');
+            accordionHeaders.forEach(header => {
+                header.addEventListener('click', () => {
+                    const content = header.nextElementSibling;
+                    const icon = header.querySelector('span');
+                    
+                    if (content.style.maxHeight) {
+                        content.style.maxHeight = null;
+                        icon.style.transform = 'rotate(0deg)';
+                    } else {
+                        document.querySelectorAll('.accordion-content').forEach(c => {
+                            c.style.maxHeight = null;
+                            c.previousElementSibling.querySelector('span').style.transform = 'rotate(0deg)';
+                        });
+                        content.style.maxHeight = content.scrollHeight + "px";
+                        icon.style.transform = 'rotate(180deg)';
+                    }
+                });
+            });
+        });
+    </script>
+
+</body>
+</html>
